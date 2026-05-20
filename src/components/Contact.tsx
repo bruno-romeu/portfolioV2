@@ -22,9 +22,9 @@ export function Contact() {
         <h2 className="text-3xl md:text-5xl font-bold mb-8">Vamos Conversar?</h2>
         
         <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl">
-          Estou sempre aberto a novas oportunidades e colaborações. 
-          Se você tem um projeto em mente ou quer apenas bater um papo sobre tecnologia, 
-          sinta-se à vontade para entrar em contato!
+          Estou aberto a conversas sobre oportunidades, projetos e colaboração em desenvolvimento web,
+          backend, APIs, automações e soluções com dados. Se quiser falar comigo sem depender da IA do
+          portfólio, meus contatos estão logo abaixo.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">

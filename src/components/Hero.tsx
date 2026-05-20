@@ -51,9 +51,9 @@ export function Hero() {
           transition={{ delay: 0.5 }}
           className="text-base md:text-lg max-w-2xl mb-8 text-gray-400 leading-relaxed"
         >
-          Artesão de software focado em criar soluções robustas e escaláveis.
-          Atualmente trabalhando com Laravel, React, Python e tecnologias modernas
-          para entregar valor real aos projetos.
+          Desenvolvo aplicações web, APIs e automações com foco em resolver problemas reais.
+          Trabalho com Python, Django, Laravel, React e PostgreSQL, conectando backend,
+          frontend e dados em soluções claras, úteis e fáceis de evoluir.
         </motion.p>
 
         <motion.div
@@ -96,7 +96,7 @@ export function Hero() {
           onClick={() => scrollToSection('about')}
           className="px-8 py-3 bg-white text-black rounded-full hover:scale-105 transition-transform text-semibold"
         >
-          Ver mais sobre mim
+          Conhecer minha trajetória
         </motion.button>
       </motion.div>
 

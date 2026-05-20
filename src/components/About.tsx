@@ -19,20 +19,20 @@ export function About() {
         
         <div className="space-y-6 text-base md:text-lg text-muted-foreground leading-relaxed">
           <p>
-            Sou estudante do <strong className="text-foreground font-semibold">5º semestre de Análise e Desenvolvimento de Sistemas na ULBRA</strong> e 
-            atuo profissionalmente como Desenvolvedor Full Stack. Gosto de encarar cada projeto como uma oportunidade de construir algo que realmente funcione bem — com atenção à qualidade, curiosidade para aprender o que for necessário e disposição para escolher as ferramentas certas para cada desafio.
+            Sou estudante de <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas na ULBRA</strong> e
+            atuo como <strong className="text-foreground font-semibold">Desenvolvedor Full Stack</strong>. Minha trajetória passou por área administrativa e suporte técnico antes da programação, então carrego comigo uma visão bem prática: entender o problema, organizar o processo e construir uma solução que funcione no dia a dia.
           </p>
 
           <p>
-            No dia a dia, desenvolvo aplicações completas com <strong className="text-foreground font-semibold">Laravel, Inertia.js e React</strong>. No back-end, tenho uma base sólida em <strong className="text-foreground font-semibold">Python</strong>, com bastante experiência construindo APIs com <strong className="text-foreground font-semibold">Django e Django REST Framework</strong>, e tenho explorado o <strong className="text-foreground font-semibold">FastAPI</strong> com interesse crescente. Trabalho com bancos de dados relacionais com frequência, com foco em <strong className="text-foreground font-semibold">PostgreSQL</strong>, e com familiaridade em MySQL, Oracle e SQL.
+            No backend, tenho afinidade com <strong className="text-foreground font-semibold">Python, Django, Django REST Framework, FastAPI, PHP e Laravel</strong>, principalmente para criação de APIs, regras de negócio, integrações e modelagem de dados. Também trabalho com bancos relacionais, com foco em <strong className="text-foreground font-semibold">PostgreSQL</strong> e familiaridade com MySQL, Oracle e SQL.
           </p>
 
           <p>
-            Ao longo da minha trajetória, fui desenvolvendo um conjunto de ferramentas que uso com naturalidade: <strong className="text-foreground font-semibold">Git</strong> para versionamento, <strong className="text-foreground font-semibold">Postman</strong> para testar APIs, <strong className="text-foreground font-semibold">Docker</strong> para containerização. Também já trabalhei com integrações de APIs externas (inclusive com recursos de inteligência artificial), automações via web scraping e aplico boas práticas de desenvolvimento no meu trabalho cotidiano.
+            No frontend, uso <strong className="text-foreground font-semibold">React, TypeScript, JavaScript, Tailwind CSS e Inertia.js</strong> para desenvolver interfaces responsivas e integradas ao backend. Também venho explorando projetos com Flutter, automações com Selenium, análise de dados com Python e integrações com IA, incluindo experimentos com a API Gemini.
           </p>
 
           <p>
-            Antes de migrar para o desenvolvimento, trabalhei com suporte técnico — uma experiência que me ensinou a pensar de forma sistêmica e a resolver problemas com calma e método. Hoje, levo isso comigo enquanto busco crescer tanto no front-end quanto no back-end, sempre com vontade de contribuir com soluções que fazem a diferença de verdade.
+            Gosto de aprender construindo. Meus projetos no GitHub refletem essa evolução: APIs com Django, e-commerce, web scraping, ETL com IA, estudos de dados, Flutter e aplicações web em PHP e React. Meu objetivo é crescer como full stack com uma base cada vez mais forte em backend, arquitetura e produtos que entreguem valor de verdade.
           </p>
         </div>
       </motion.div>

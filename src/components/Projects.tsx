@@ -5,34 +5,46 @@ import { ExternalLink, Github } from 'lucide-react';
 
 const projects = [
   {
-    title: 'Sistema de Gestão Empresarial',
-    description: 'Aplicação completa para gestão empresarial desenvolvida com Laravel, Inertia.js e React. Inclui módulos de controle financeiro, estoque e relatórios.',
-    tech: ['Laravel', 'React', 'Inertia.js', 'PostgreSQL', 'Tailwind CSS'],
-    image: 'https://images.unsplash.com/photo-1771923082503-0a3381c46cef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMG1hbmFnZW1lbnQlMjBkYXNoYm9hcmR8ZW58MXx8fHwxNzcyOTA4NjMzfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    github: '#',
-    demo: '#'
+    title: 'flix-API-Django',
+    subtitle: 'API RESTful de filmes',
+    description:
+      'API RESTful de filmes desenvolvida com Django REST Framework durante estudos avançados de Django, praticando models, serializers, endpoints e organização de uma aplicação backend.',
+    tech: ['Python', 'Django', 'DRF', 'Backend'],
+    image: 'https://opengraph.githubassets.com/portfolio/bruno-romeu/flix-API-Django',
+    github: 'https://github.com/bruno-romeu/flix-API-Django',
   },
   {
-    title: 'API RESTful com Django',
-    description: 'API robusta construída com Django REST Framework para gerenciamento de dados e integração com múltiplos sistemas.',
-    tech: ['Python', 'Django', 'DRF', 'PostgreSQL', 'Docker'],
-    image: 'https://images.unsplash.com/photo-1618422168439-4b03d3a05b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcGklMjBkZXZlbG9wbWVudCUyMGNvZGluZyUyMHNjcmVlbnxlbnwxfHx8fDE3NzI5MDg2MzN8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    github: '#',
-    demo: '#'
+    title: 'sge_laravel',
+    subtitle: 'Sistema de gestão empresarial',
+    description:
+      'Sistema de gestão desenvolvido com Laravel, representando minha prática com aplicações web completas, organização de regras de negócio, persistência de dados e estruturação de fluxos administrativos.',
+    tech: ['PHP', 'Laravel', 'Backend', 'Gestão'],
+    image: 'https://opengraph.githubassets.com/portfolio/bruno-romeu/sge_laravel',
+    github: 'https://github.com/bruno-romeu/sge_laravel',
   },
   {
-    title: 'Automação Web Scraping',
-    description: 'Sistema de automação para coleta e processamento de dados utilizando Python, com armazenamento em banco de dados.',
-    tech: ['Python', 'FastAPI', 'Web Scraping', 'MySQL'],
-    image: 'https://images.unsplash.com/photo-1759752393975-7ca7b302fcc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwYXV0b21hdGlvbiUyMHRlY2hub2xvZ3l8ZW58MXx8fHwxNzcyODM4NTg1fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    github: '#',
-    demo: '#'
-  }
+    title: 'ETL-ecommerce',
+    subtitle: 'Dados e IA aplicada',
+    description:
+      'Script de ETL em Python que consome dados da DummyJSON, identifica produtos com baixa avaliação e usa Gemini para sugerir melhorias em título, descrição e preço. Une consumo de APIs, tratamento de dados e IA aplicada.',
+    tech: ['Python', 'ETL', 'Gemini API', 'Dados'],
+    image: 'https://opengraph.githubassets.com/portfolio/bruno-romeu/ETL-ecommerce',
+    github: 'https://github.com/bruno-romeu/ETL-ecommerce',
+  },
+  {
+    title: 'bot_search_price',
+    subtitle: 'Automação e web scraping',
+    description:
+      'Bot em Python com Selenium para monitorar produtos em plataformas de venda online, coletando título, preço e link. Mostra meu interesse por automação, coleta de dados e tarefas repetitivas resolvidas com software.',
+    tech: ['Python', 'Selenium', 'Web Scraping', 'Automação'],
+    image: 'https://opengraph.githubassets.com/portfolio/bruno-romeu/bot_search_price',
+    github: 'https://github.com/bruno-romeu/bot_search_price',
+  },
 ];
 
 export function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center px-6 py-20 bg-slate-100">
@@ -43,59 +55,83 @@ export function Projects() {
         transition={{ duration: 0.6 }}
         className="max-w-6xl w-full"
       >
-        <h2 className="text-3xl md:text-5xl font-bold mb-12">Projetos em Destaque</h2>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="mb-12 max-w-3xl">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">Projetos em destaque</h2>
+          <p className="text-base md:text-lg text-gray-600 leading-relaxed">
+            Uma seleção de projetos públicos que mostram minha evolução com backend, APIs,
+            automações, dados, IA aplicada, frontend e mobile.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {projects.map((project, index) => (
-            <motion.div
+            <motion.article
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300"
+              transition={{ delay: index * 0.08, duration: 0.5 }}
+              className="group rounded-lg bg-white border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
             >
-              <div className="aspect-video  from-muted to-muted/50 overflow-hidden">
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="block bg-gray-950">
                 <img
                   src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-2xl"
+                  alt={`Preview do repositório ${project.title}`}
+                  className="w-full aspect-[1200/630] object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                  loading="lazy"
                 />
-              </div>
-              
+              </a>
+
               <div className="p-6">
+                <p className="text-sm font-medium text-purple-700 mb-2">{project.subtitle}</p>
                 <h3 className="text-2xl font-semibold mb-3">{project.title}</h3>
-                <p className="text-base text-muted-foreground mb-4">{project.description}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
+                <p className="text-base text-gray-600 mb-5 leading-relaxed">{project.description}</p>
+
+                <div className="flex flex-wrap gap-2 mb-5">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs rounded-full bg-muted text-foreground border border-border/80"
+                      className="px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-800 border border-gray-200"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   <a
                     href={project.github}
-                    className="flex items-center gap-2 text-sm hover:opacity-70 transition-opacity"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-purple-700 transition-colors"
                   >
                     <Github size={18} />
-                    <span>Código</span>
+                    <span>Ver código</span>
                   </a>
                   <a
-                    href={project.demo}
-                    className="flex items-center gap-2 text-sm hover:opacity-70 transition-opacity"
+                    href={`https://github.com/bruno-romeu/${project.title}#readme`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-purple-700 transition-colors"
                   >
                     <ExternalLink size={18} />
-                    <span>Demo</span>
+                    <span>README</span>
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <a
+            href="https://github.com/bruno-romeu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-gray-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-purple-700"
+          >
+            <Github size={18} />
+            <span>Ver todos no GitHub</span>
+          </a>
         </div>
       </motion.div>
     </section>
