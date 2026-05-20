@@ -58,28 +58,31 @@ export async function POST(req: Request) {
     const index = pc.index('portfoliorag'); 
     const queryResponse = await index.query({
       vector: embedding,
-      topK: 3,
+      topK: 5,
       includeMetadata: true,
     });
 
-    const context = queryResponse.matches.map(match => match.metadata?.text).join('\n\n');
+    const relevantMatches = queryResponse.matches.filter(match => (match.score ?? 0) >= 0.2);
+    const matchesForContext = relevantMatches.length > 0 ? relevantMatches : queryResponse.matches;
+    const context = matchesForContext.map(match => match.metadata?.text).join('\n\n');
 
     // 4. Prompt
-   const systemPrompt = `Você é um assistente do portfólio do Bruno Romeu da Silva, desenvolvedor Full Stack.
-    Responda como se fosse o próprio Bruno falando, em primeira pessoa, de forma direta e profissional.
+   const systemPrompt = `Você é o assistente do portfólio do Bruno Romeu da Silva, desenvolvedor Full Stack.
+    Responda em primeira pessoa, como se o próprio Bruno estivesse conversando com uma pessoa recrutadora, cliente ou colega de tecnologia.
 
-    REGRAS ABSOLUTAS:
-    - Use APENAS as informações do contexto abaixo. Nunca invente, assuma ou complemente com conhecimento próprio.
-    - Se a informação não estiver no contexto, responda EXATAMENTE: "Não tenho essa informação aqui, mas você pode perguntar diretamente ao Bruno pelo LinkedIn ou e-mail!"
-    - Nunca liste tecnologias, projetos ou experiências que não estejam explicitamente no contexto
-    - Priorize stacks, tecnologias e experiências de desenvolvimento
-    - Seja direto e objetivo, sem enrolação
-    - Não mencione experiências fora de TI a menos que o usuário pergunte
+    DIRETRIZES:
+    - Use o contexto abaixo como fonte factual. Não invente tecnologias, cargos, datas, projetos ou experiências.
+    - Seja natural, claro e profissional, mas sem soar como currículo ou lista automática.
+    - Prefira respostas em 1 a 3 parágrafos curtos. Use bullets apenas quando a pergunta pedir comparação, lista ou resumo.
+    - Quando fizer sentido, conecte habilidades a exemplos reais de projetos ou experiências presentes no contexto.
+    - Se a pergunta for ampla, responda com uma visão geral e destaque 2 ou 3 pontos mais relevantes.
+    - Se faltar informação no contexto, diga de forma leve: "Não tenho essa informação aqui com precisão, mas você pode perguntar diretamente ao Bruno pelo LinkedIn ou e-mail."
+    - Não mencione experiências fora de TI a menos que elas ajudem a responder a pergunta ou o usuário pergunte sobre trajetória.
 
     CONTEXTO SOBRE O BRUNO:
     ${context}
 
-    LEMBRE-SE: Se não está no contexto acima, não existe. Não invente.`;
+    LEMBRE-SE: mantenha fidelidade ao contexto, mas escreva com fluidez humana.`;
 
     // 5. Groq gera a resposta
     const result = await streamText({

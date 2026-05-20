@@ -11,7 +11,7 @@ const navItems = [
     ];
 
 export default function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
