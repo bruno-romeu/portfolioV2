@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef, useState } from 'react';
 import { ExternalLink, Github, MessageCircle } from 'lucide-react';
+import { prefetchChatPanel } from './chat/loadChatPanel';
 
 type Project = {
   title: string;
@@ -188,7 +189,13 @@ export function Projects() {
                     <span>README</span>
                   </a>
                   {project.chatDemo && (
-                    <button type="button" onClick={openChat} className={chatButtonClass}>
+                    <button
+                      type="button"
+                      onClick={openChat}
+                      onPointerEnter={prefetchChatPanel}
+                      onFocus={prefetchChatPanel}
+                      className={chatButtonClass}
+                    >
                       <MessageCircle size={18} aria-hidden="true" />
                       <span>Testar o chat</span>
                     </button>
