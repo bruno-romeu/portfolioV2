@@ -1,2 +1,10 @@
-@import "tailwindcss";
+/* Escaneia só os arquivos do site: a raiz do repositório pode conter outras pastas locais. */
+@import "tailwindcss" source(none);
+@source "../index.html";
+@source "./";
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

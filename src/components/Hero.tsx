@@ -1,10 +1,15 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
 
+const focusRing =
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]';
+
 export function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    element?.scrollIntoView();
   };
 
   return (
@@ -22,7 +27,7 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-sm md:text-base mb-4 text-gray-600"
+          className="text-sm md:text-base mb-4 text-gray-400"
         >
           Olá, eu sou
         </motion.p>
@@ -66,26 +71,26 @@ export function Hero() {
             href="https://github.com/bruno-romeu"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-full border border-border hover:border-gray-400/50 transition-all hover:scale-110 text-white"
+            className={`p-3 rounded-full border border-white/15 hover:border-gray-400/50 transition-all hover:scale-110 text-white ${focusRing}`}
             aria-label="GitHub"
           >
-            <Github size={24} className='hover:text-blue-400 transition-colors'/>
+            <Github size={24} aria-hidden="true" className='hover:text-blue-400 transition-colors'/>
           </a>
           <a
             href="https://www.linkedin.com/in/bruno-romeu-silva"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-full border border-border hover:border-gray-400/50 transition-all hover:scale-110 text-white"
+            className={`p-3 rounded-full border border-white/15 hover:border-gray-400/50 transition-all hover:scale-110 text-white ${focusRing}`}
             aria-label="LinkedIn"
           >
-            <Linkedin size={24} className='hover:text-blue-400 transition-colors'/>
+            <Linkedin size={24} aria-hidden="true" className='hover:text-blue-400 transition-colors'/>
           </a>
           <a
             href="mailto:contatobrunoromeu@gmail.com"
-            className="p-3 rounded-full border border-border hover:border-gray-400/50 transition-all hover:scale-110 text-white"
+            className={`p-3 rounded-full border border-white/15 hover:border-gray-400/50 transition-all hover:scale-110 text-white ${focusRing}`}
             aria-label="Email"
           >
-            <Mail size={24} className='hover:text-blue-400 transition-colors'/>
+            <Mail size={24} aria-hidden="true" className='hover:text-blue-400 transition-colors'/>
           </a>
         </motion.div>
 
@@ -94,20 +99,27 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
           onClick={() => scrollToSection('about')}
-          className="px-8 py-3 bg-white text-black rounded-full hover:scale-105 transition-transform text-semibold"
+          className={`px-8 py-3 bg-white text-black rounded-full hover:scale-105 transition-transform font-semibold ${focusRing}`}
         >
           Conhecer minha trajetória
         </motion.button>
       </motion.div>
 
-      <motion.div
+      <motion.button
+        type="button"
+        onClick={() => scrollToSection('about')}
+        aria-label="Rolar para a seção Sobre mim"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, repeat: Infinity, repeatType: 'reverse', duration: 1.5 }}
-        className="absolute bottom-8"
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [0, 1] }}
+        transition={
+          shouldReduceMotion
+            ? { delay: 1 }
+            : { delay: 1, repeat: Infinity, repeatType: 'reverse', duration: 1.5 }
+        }
+        className={`absolute bottom-8 p-2 rounded-full text-gray-400 hover:text-white transition-colors cursor-pointer ${focusRing}`}
       >
-        <ArrowDown size={32} className="text-gray-400 cursor-pointer" onClick={() => scrollToSection('about')} />
-      </motion.div>
+        <ArrowDown size={32} aria-hidden="true" />
+      </motion.button>
     </section>
   );
 }

@@ -15,20 +15,20 @@ export function About() {
         transition={{ duration: 0.6 }}
         className="max-w-4xl w-full"
       >
-        <h2 className="text-3xl md:text-5xl font-bold mb-8">Sobre mim</h2>
+        <h2 className="text-3xl md:text-5xl font-bold mb-8 text-gray-900">Sobre mim</h2>
         
-        <div className="space-y-6 text-base md:text-lg text-muted-foreground leading-relaxed">
+        <div className="space-y-6 text-base md:text-lg text-gray-600 leading-relaxed">
           <p>
-            Sou estudante de <strong className="text-foreground font-semibold">Análise e Desenvolvimento de Sistemas na ULBRA</strong> e
-            atuo como <strong className="text-foreground font-semibold">Desenvolvedor Full Stack</strong>. Minha trajetória passou por área administrativa e suporte técnico antes da programação, então carrego comigo uma visão bem prática: entender o problema, organizar o processo e construir uma solução que funcione no dia a dia.
+            Sou estudante de <strong className="text-gray-900 font-semibold">Análise e Desenvolvimento de Sistemas na ULBRA</strong> e
+            atuo como <strong className="text-gray-900 font-semibold">Desenvolvedor Full Stack</strong>. Minha trajetória passou por área administrativa e suporte técnico antes da programação, então carrego comigo uma visão bem prática: entender o problema, organizar o processo e construir uma solução que funcione no dia a dia.
           </p>
 
           <p>
-            No backend, tenho afinidade com <strong className="text-foreground font-semibold">Python, Django, Django REST Framework, FastAPI, PHP e Laravel</strong>, principalmente para criação de APIs, regras de negócio, integrações e modelagem de dados. Também trabalho com bancos relacionais, com foco em <strong className="text-foreground font-semibold">PostgreSQL</strong> e familiaridade com MySQL, Oracle e SQL.
+            No backend, tenho afinidade com <strong className="text-gray-900 font-semibold">Python, Django, Django REST Framework, FastAPI, PHP e Laravel</strong>, principalmente para criação de APIs, regras de negócio, integrações e modelagem de dados. Também trabalho com bancos relacionais, com foco em <strong className="text-gray-900 font-semibold">PostgreSQL</strong> e familiaridade com MySQL, Oracle e SQL.
           </p>
 
           <p>
-            No frontend, uso <strong className="text-foreground font-semibold">React, TypeScript, JavaScript, Tailwind CSS e Inertia.js</strong> para desenvolver interfaces responsivas e integradas ao backend. Também venho explorando projetos com Flutter, automações com Selenium, análise de dados com Python e integrações com IA, incluindo experimentos com a API Gemini.
+            No frontend, uso <strong className="text-gray-900 font-semibold">React, TypeScript, JavaScript, Tailwind CSS e Inertia.js</strong> para desenvolver interfaces responsivas e integradas ao backend. Também venho explorando projetos com Flutter, automações com Selenium, análise de dados com Python e integrações com IA, incluindo experimentos com a API Gemini.
           </p>
 
           <p>
