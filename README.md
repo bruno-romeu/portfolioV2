@@ -1,75 +1,52 @@
-# React + TypeScript + Vite
+# Portfólio — Bruno Romeu da Silva
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfólio pessoal de desenvolvedor Full Stack, com um assistente de IA ("Bruno AI") que responde perguntas sobre minha trajetória, projetos e stack usando RAG.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Motion, lucide-react
+- **Chat:** Vercel AI SDK (`ai` + `@ai-sdk/react`), respostas em streaming renderizadas com `react-markdown`
+- **RAG (função serverless em `api/chat.ts`):**
+  1. Embedding da pergunta com `sentence-transformers/all-MiniLM-L6-v2` (Hugging Face Inference)
+  2. Busca vetorial no Pinecone (índice `portfoliorag`, top 5)
+  3. Geração com Llama 3.1 8B via Groq
+- **Deploy:** Vercel
 
-## React Compiler
+## Rodando localmente
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+O `npm run dev` sobe só o frontend. A rota `/api/chat` é uma Vercel Function; para testar o chat localmente, use a Vercel CLI:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npx vercel dev
 ```
+
+### Variáveis de ambiente
+
+Crie um `.env` (ignorado pelo git) ou configure no painel da Vercel:
+
+| Variável | Uso |
+|---|---|
+| `GROQ_API_KEY` | Geração das respostas (Groq) |
+| `PINECONE_API_KEY` | Busca do contexto no Pinecone |
+| `HF_TOKEN` | Embeddings no Hugging Face Inference |
+
+## Proteções da API de chat
+
+- Validação do corpo: só mensagens `user`/`assistant`; a última precisa ser do usuário.
+- Limites: 1000 caracteres por pergunta, 20 mensagens de histórico, 600 tokens de saída.
+- Rate limit por IP (10/min, 60/h) em memória. É *best-effort*: em serverless o estado é por instância. Para um limite garantido, use o Firewall da Vercel ou um store como Upstash/Vercel KV.
+- Erros sempre em JSON `{ "error": "<mensagem>" }`, sem detalhes internos; o conteúdo das conversas não é logado.
+
+## Scripts
+
+| Comando | Descrição |
+|---|---|
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Typecheck + build de produção |
+| `npm run lint` | ESLint |
+| `npm run preview` | Serve o build localmente |

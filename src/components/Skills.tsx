@@ -50,14 +50,14 @@ export function Skills() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="p-6 rounded-2xl border border-border shadow-md hover:scale-105 hover:bg-transparent transition-all hover:shadow-blue-600/40 hover:shadow-2xl duration-300 ease-in-out"
+              className="p-6 rounded-2xl border border-white/10 bg-white/5 shadow-md hover:scale-105 hover:bg-white/[0.07] hover:border-white/20 transition-all hover:shadow-blue-600/40 hover:shadow-2xl duration-300 ease-in-out"
             >
               <h3 className="text-xl font-semibold mb-4">{skillGroup.category}</h3>
               <div className="flex flex-wrap gap-2">
                 {skillGroup.items.map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 text-sm rounded-full bg-muted text-foreground border border-border/80"
+                    className="px-3 py-1 text-sm rounded-full bg-white/10 text-gray-100 border border-white/15"
                   >
                     {skill}
                   </span>
