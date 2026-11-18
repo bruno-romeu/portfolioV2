@@ -2,7 +2,7 @@
 
 ## Principais projetos pessoais do Bruno
 
-Os principais projetos pessoais públicos do Bruno Romeu da Silva no GitHub (github.com/bruno-romeu) são: o Sinaliza, seu TCC, um sistema de apoio ao acompanhamento da trajetória escolar com FastAPI, PostgreSQL e React; uma automação de conteúdo para Instagram com FastAPI, PostgreSQL e Gemini; e este portfólio (portfolioV2), com um chat de IA baseado em RAG. Esses projetos mostram o Bruno trabalhando com backend, frontend, dados, infraestrutura com Docker e integração com IA.
+Os principais projetos pessoais públicos do Bruno Romeu da Silva no GitHub (github.com/bruno-romeu) são: o Sinaliza, seu TCC, um sistema de apoio ao acompanhamento da trajetória escolar com FastAPI, PostgreSQL e React; uma automação de conteúdo para Instagram com FastAPI, PostgreSQL e Gemini; e este portfólio (portfolioV2), com um chat de IA baseado em RAG. Esses projetos mostram o Bruno trabalhando com backend, frontend, dados, infraestrutura com Docker e integração com IA. Fora do GitHub público, em repositório privado, Bruno também desenvolveu um e-commerce completo com Django, Next.js, Mercado Pago e Melhor Envio.
 
 ## Outros projetos do Bruno por área
 
