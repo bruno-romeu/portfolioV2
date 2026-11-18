@@ -49,6 +49,7 @@ Crie um `.env` (ignorado pelo git) ou configure no painel da Vercel:
 | `npm run build` | Typecheck + build de produção |
 | `npm run lint` | ESLint |
 | `npm run preview` | Serve o build localmente |
+| `npm run rag:ingest` | Indexa a base de conhecimento do chat no Pinecone (ver abaixo) |
 
 ## Embedding local (transformers.js)
 
@@ -56,3 +57,15 @@ O modelo (`Xenova/all-MiniLM-L6-v2`, q8, ~23 MB) é baixado do Hugging Face Hub 
 
 - `.npmrc` pula o download dos binários CUDA do `onnxruntime-node` no `postinstall`.
 - `vercel.json` exclui da função os binários de outras plataformas e o `onnxruntime-web`, para caber no limite de tamanho.
+
+## Base de conhecimento do chat
+
+O conteúdo que o chat usa como contexto fica em `rag/conteudo/*.md`, um arquivo por tema. Cada seção `##` vira um trecho indexado isoladamente, então cada seção precisa ser autocontida (repetir o nome do Bruno e o assunto) e ter entre 300 e 900 caracteres.
+
+O script `scripts/rag/ingest.mjs` gera os embeddings com a mesma configuração de `api/chat.ts` e grava no índice `portfoliorag`, com IDs `kb:<arquivo>:<n>`. Ele lê `PINECONE_API_KEY` do ambiente ou do `.env.local` (ignorado pelo git).
+
+1. Edite os arquivos em `rag/conteudo`.
+2. `npm run rag:ingest -- --dry-run`: gera os trechos e embeddings sem tocar no Pinecone e mostra quantidade, tamanhos e os primeiros trechos.
+3. `npm run rag:ingest -- --export`: salva os IDs e textos que estão hoje no índice em `rag/export-indice-atual.json` (ignorado pelo git), para revisão.
+4. `npm run rag:ingest`: faz upsert da base e informa quantos vetores antigos (fora da base) continuam no índice.
+5. `npm run rag:ingest -- --prune`: faz upsert e apaga os vetores que não fazem parte da base, listando antes quais serão removidos.
