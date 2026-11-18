@@ -20,7 +20,7 @@ const projects: Project[] = [
     title: 'portfolioV2',
     subtitle: 'Portfólio com assistente de IA (RAG)',
     description:
-      'Este portfólio, feito com React 19, TypeScript, Vite e Tailwind CSS. Inclui o "Bruno AI", um chat que responde perguntas sobre mim usando RAG: embeddings com sentence-transformers/all-MiniLM-L6-v2 via Hugging Face Inference, busca vetorial no Pinecone e geração com Llama 3.1 8B via Groq, com streaming pelo Vercel AI SDK em uma função serverless na Vercel.',
+      'Este portfólio, feito com React 19, TypeScript, Vite e Tailwind CSS. Inclui o "Bruno AI", um chat que responde perguntas sobre mim usando RAG: embeddings com all-MiniLM-L6-v2 gerados na própria função via transformers.js, busca vetorial no Pinecone e geração com gpt-oss-20b via Groq, com streaming pelo Vercel AI SDK em uma função serverless na Vercel.',
     tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'RAG', 'Pinecone', 'Groq', 'Vercel AI SDK'],
     image: 'https://opengraph.githubassets.com/portfolio/bruno-romeu/portfolioV2',
     github: 'https://github.com/bruno-romeu/portfolioV2',
@@ -120,7 +120,7 @@ export function Projects() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4 text-gray-900">Projetos em destaque</h2>
           <p className="text-base md:text-lg text-gray-600 leading-relaxed">
             Uma seleção de projetos públicos que mostram minha evolução com backend, APIs,
-            automações, dados, IA aplicada, frontend e mobile.
+            automações, dados, IA aplicada e frontend.
           </p>
         </div>
 

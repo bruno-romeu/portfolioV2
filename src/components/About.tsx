@@ -19,20 +19,31 @@ export function About() {
         
         <div className="space-y-6 text-base md:text-lg text-gray-600 leading-relaxed">
           <p>
-            Sou estudante de <strong className="text-gray-900 font-semibold">Análise e Desenvolvimento de Sistemas na ULBRA</strong> e
-            atuo como <strong className="text-gray-900 font-semibold">Desenvolvedor Full Stack</strong>. Minha trajetória passou por área administrativa e suporte técnico antes da programação, então carrego comigo uma visão bem prática: entender o problema, organizar o processo e construir uma solução que funcione no dia a dia.
+            Sou <strong className="text-gray-900 font-semibold">Desenvolvedor Fullstack na Infinilabs</strong> desde fevereiro de 2026.
+            Antes da programação, trabalhei na área administrativa, onde cuidava de processos de financiamento imobiliário,
+            e depois no suporte técnico de uma empresa de sistemas de gestão. Dessa trajetória ficou uma visão prática:
+            entender o problema e o processo de quem usa o sistema antes de construir a solução.
           </p>
 
           <p>
-            No backend, tenho afinidade com <strong className="text-gray-900 font-semibold">Python, Django, Django REST Framework, FastAPI, PHP e Laravel</strong>, principalmente para criação de APIs, regras de negócio, integrações e modelagem de dados. Também trabalho com bancos relacionais, com foco em <strong className="text-gray-900 font-semibold">PostgreSQL</strong> e familiaridade com MySQL, Oracle e SQL.
+            Na Infinilabs, fui o principal responsável por uma plataforma de gestão de riscos psicossociais para adequação
+            à NR-1, do levantamento de requisitos com a cliente à prototipação, ao planejamento de sprints e à implementação,
+            incluindo a modelagem e a documentação dos dados. Também desenvolvi em equipe um backoffice com perfis, permissões
+            e integração com APIs externas, e contribuí no frontend e no CMS de um portal internacional.
           </p>
 
           <p>
-            No frontend, uso <strong className="text-gray-900 font-semibold">React, TypeScript, JavaScript, Tailwind CSS e Inertia.js</strong> para desenvolver interfaces responsivas e integradas ao backend. Também venho explorando projetos com Flutter, automações com Selenium, análise de dados com Python e integrações com IA, incluindo experimentos com a API Gemini.
+            Minha stack principal é <strong className="text-gray-900 font-semibold">TypeScript e Python</strong>, com{' '}
+            <strong className="text-gray-900 font-semibold">Next.js, NestJS, React, Laravel e Django</strong> e{' '}
+            <strong className="text-gray-900 font-semibold">PostgreSQL</strong> como banco principal. Nos projetos pessoais
+            do GitHub, também uso FastAPI, Docker e integrações com IA, como no Sinaliza, meu TCC.
           </p>
 
           <p>
-            Gosto de aprender construindo. Meus projetos no GitHub refletem essa evolução: APIs com Django, e-commerce, web scraping, ETL com IA, estudos de dados, Flutter e aplicações web em PHP e React. Meu objetivo é crescer como full stack com uma base cada vez mais forte em backend, arquitetura e produtos que entreguem valor de verdade.
+            Construí minha base escrevendo código sem apoio de IA e hoje também desenvolvo com agentes, com um fluxo
+            estruturado: especificação antes de começar, decisão registrada, teste contra o sistema real e revisão antes
+            do merge. Curso <strong className="text-gray-900 font-semibold">Análise e Desenvolvimento de Sistemas na ULBRA</strong>,
+            no 6º semestre, com conclusão prevista para dezembro de 2026.
           </p>
         </div>
       </motion.div>
