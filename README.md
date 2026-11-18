@@ -7,7 +7,7 @@ Portfólio pessoal de desenvolvedor Full Stack, com um assistente de IA ("Bruno 
 - **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Motion, lucide-react
 - **Chat:** Vercel AI SDK (`ai` + `@ai-sdk/react`), respostas em streaming renderizadas com `react-markdown`
 - **RAG (função serverless em `api/chat.ts`):**
-  1. Embedding da pergunta com `sentence-transformers/all-MiniLM-L6-v2` (Hugging Face Inference)
+  1. Embedding da pergunta com `all-MiniLM-L6-v2`, gerado dentro da própria função via transformers.js (ONNX, sem API externa nem token)
   2. Busca vetorial no Pinecone (índice `portfoliorag`, top 5)
   3. Geração com Llama 3.1 8B via Groq
 - **Deploy:** Vercel
@@ -33,7 +33,6 @@ Crie um `.env` (ignorado pelo git) ou configure no painel da Vercel:
 |---|---|
 | `GROQ_API_KEY` | Geração das respostas (Groq) |
 | `PINECONE_API_KEY` | Busca do contexto no Pinecone |
-| `HF_TOKEN` | Embeddings no Hugging Face Inference |
 
 ## Proteções da API de chat
 
@@ -50,3 +49,10 @@ Crie um `.env` (ignorado pelo git) ou configure no painel da Vercel:
 | `npm run build` | Typecheck + build de produção |
 | `npm run lint` | ESLint |
 | `npm run preview` | Serve o build localmente |
+
+## Embedding local (transformers.js)
+
+O modelo (`Xenova/all-MiniLM-L6-v2`, q8, ~23 MB) é baixado do Hugging Face Hub na primeira requisição de cada instância e guardado em `/tmp`. Isso deixa o *cold start* alguns segundos mais lento, mas elimina custo e cota de API.
+
+- `.npmrc` pula o download dos binários CUDA do `onnxruntime-node` no `postinstall`.
+- `vercel.json` exclui da função os binários de outras plataformas e o `onnxruntime-web`, para caber no limite de tamanho.

@@ -2,7 +2,8 @@ import { streamText, createUIMessageStreamResponse } from 'ai';
 import type { ModelMessage } from 'ai';
 import { createGroq } from '@ai-sdk/groq';
 import { Pinecone } from '@pinecone-database/pinecone';
-import { InferenceClient } from '@huggingface/inference';
+import { env as transformersEnv, pipeline } from '@huggingface/transformers';
+import type { FeatureExtractionPipeline } from '@huggingface/transformers';
 
 // ---------------------------------------------------------------------------
 // Limites e configuração
@@ -23,7 +24,14 @@ const RATE_LIMIT_PER_HOUR = 60;
 /** Teto de IPs rastreados em memória, para o Map não crescer sem limite. */
 const RATE_LIMIT_MAX_TRACKED_IPS = 5000;
 
-const EMBEDDING_MODEL = 'sentence-transformers/all-MiniLM-L6-v2';
+/**
+ * Embeddings gerados localmente na função (transformers.js / ONNX), sem API externa.
+ * É o export ONNX do mesmo `sentence-transformers/all-MiniLM-L6-v2` (384 dimensões)
+ * usado para indexar o Pinecone, então os vetores continuam compatíveis.
+ * `q8` (~23 MB) deixa o cold start mais rápido; similaridade com fp32 ≈ 0,99.
+ */
+const EMBEDDING_MODEL = 'Xenova/all-MiniLM-L6-v2';
+const EMBEDDING_DTYPE = 'q8';
 const PINECONE_INDEX = 'portfoliorag';
 const PINECONE_TOP_K = 5;
 const MIN_MATCH_SCORE = 0.2;
@@ -31,7 +39,7 @@ const LLM_MODEL = 'llama-3.1-8b-instant';
 const LLM_MAX_OUTPUT_TOKENS = 600;
 const LLM_TEMPERATURE = 0.4;
 
-const REQUIRED_ENV_VARS = ['GROQ_API_KEY', 'PINECONE_API_KEY', 'HF_TOKEN'] as const;
+const REQUIRED_ENV_VARS = ['GROQ_API_KEY', 'PINECONE_API_KEY'] as const;
 
 // ---------------------------------------------------------------------------
 // Respostas de erro padronizadas: { "error": "<mensagem amigável>" }
@@ -216,14 +224,12 @@ function readEnv(): Env | null {
   return {
     GROQ_API_KEY: process.env.GROQ_API_KEY ?? '',
     PINECONE_API_KEY: process.env.PINECONE_API_KEY ?? '',
-    HF_TOKEN: process.env.HF_TOKEN ?? '',
   };
 }
 
 interface Clients {
   groq: ReturnType<typeof createGroq>;
   pinecone: Pinecone;
-  hf: InferenceClient;
 }
 
 let clients: Clients | null = null;
@@ -232,9 +238,32 @@ function getClients(env: Env): Clients {
   clients ??= {
     groq: createGroq({ apiKey: env.GROQ_API_KEY }),
     pinecone: new Pinecone({ apiKey: env.PINECONE_API_KEY }),
-    hf: new InferenceClient(env.HF_TOKEN),
   };
   return clients;
+}
+
+// Na Vercel só /tmp é gravável; o modelo é baixado do Hugging Face Hub (download
+// público, sem token nem créditos) na primeira requisição de cada instância.
+if (process.env.VERCEL) transformersEnv.cacheDir = '/tmp/transformers-cache';
+
+let extractorPromise: Promise<FeatureExtractionPipeline> | null = null;
+
+/** Carrega o modelo uma vez por instância; se falhar, a próxima requisição tenta de novo. */
+function getExtractor(): Promise<FeatureExtractionPipeline> {
+  extractorPromise ??= pipeline('feature-extraction', EMBEDDING_MODEL, { dtype: EMBEDDING_DTYPE }).catch(
+    (error: unknown) => {
+      extractorPromise = null;
+      throw error;
+    },
+  );
+  return extractorPromise;
+}
+
+async function embed(text: string): Promise<number[] | null> {
+  const extractor = await getExtractor();
+  const output = await extractor(text, { pooling: 'mean', normalize: true });
+  const vector = Array.from(output.data, Number);
+  return vector.length > 0 && vector.every(Number.isFinite) ? vector : null;
 }
 
 // ---------------------------------------------------------------------------
@@ -242,19 +271,6 @@ function getClients(env: Env): Clients {
 // ---------------------------------------------------------------------------
 
 type Stage = 'embedding' | 'pinecone' | 'llm';
-
-function isNumberArray(value: unknown): value is number[] {
-  return Array.isArray(value) && value.every((n) => typeof n === 'number' && Number.isFinite(n));
-}
-
-/** `featureExtraction` pode retornar `number[]` ou `number[][]` (usa a primeira linha). */
-function toEmbeddingVector(output: unknown): number[] | null {
-  if (isNumberArray(output)) return output.length > 0 ? output : null;
-  if (Array.isArray(output) && isNumberArray(output[0])) {
-    return output[0].length > 0 ? output[0] : null;
-  }
-  return null;
-}
 
 function buildSystemPrompt(context: string): string {
   return `Você é o assistente do portfólio do Bruno Romeu da Silva, desenvolvedor Full Stack.
@@ -335,16 +351,12 @@ export async function POST(req: Request): Promise<Response> {
   // 3. Configuração do servidor.
   const env = readEnv();
   if (!env) return jsonError(500, 'O assistente está indisponível no momento. Tente novamente mais tarde.');
-  const { groq, pinecone, hf } = getClients(env);
+  const { groq, pinecone } = getClients(env);
 
   let stage: Stage = 'embedding';
   try {
-    // 4. Embedding da pergunta.
-    const embeddingOutput = await hf.featureExtraction({
-      model: EMBEDDING_MODEL,
-      inputs: validation.lastUserText,
-    });
-    const vector = toEmbeddingVector(embeddingOutput);
+    // 4. Embedding da pergunta (local, sem API externa).
+    const vector = await embed(validation.lastUserText);
     if (!vector) throw new TypeError('Formato de embedding inesperado');
 
     // 5. Busca de contexto no Pinecone (contexto vazio se nada útil voltar).
