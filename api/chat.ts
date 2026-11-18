@@ -280,12 +280,26 @@ ${context}
 LEMBRE-SE: mantenha fidelidade ao contexto, mas escreva com fluidez humana.`;
 }
 
+/**
+ * Resumo do erro para log: nome, status HTTP e mensagem do provedor (truncada).
+ * O status pode vir em `error.status` (AI SDK) ou em `error.httpResponse.status`
+ * (Hugging Face). A mensagem dos provedores descreve a falha (credencial, cota,
+ * modelo) e não inclui o texto enviado pelo usuário.
+ */
 function describeError(error: unknown): string {
-  if (error instanceof Error) {
-    const status = isRecord(error) && typeof error.status === 'number' ? ` (status ${error.status})` : '';
-    return `${error.name}${status}`;
+  if (!(error instanceof Error)) return typeof error;
+
+  let status: number | undefined;
+  if (isRecord(error)) {
+    if (typeof error.status === 'number') status = error.status;
+    else if (isRecord(error.httpResponse) && typeof error.httpResponse.status === 'number') {
+      status = error.httpResponse.status;
+    }
   }
-  return typeof error;
+
+  const statusText = status !== undefined ? ` (status ${status})` : '';
+  const message = error.message ? `: ${error.message.slice(0, 300)}` : '';
+  return `${error.name}${statusText}${message}`;
 }
 
 // ---------------------------------------------------------------------------
