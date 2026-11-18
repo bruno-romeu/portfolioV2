@@ -4,24 +4,35 @@ import { useRef } from 'react';
 
 const skills = [
   {
-    category: 'Backend',
-    items: ['Laravel', 'Python', 'Django', 'Django REST Framework', 'FastAPI', 'PHP']
+    category: 'Linguagens',
+    items: ['TypeScript', 'JavaScript', 'PHP', 'Python', 'SQL', 'HTML', 'CSS']
   },
   {
     category: 'Frontend',
-    items: ['React', 'Inertia.js', 'JavaScript', 'TypeScript', 'Tailwind CSS', 'HTML5/CSS3']
+    items: ['Next.js', 'React', 'Astro', 'Tailwind CSS', 'shadcn/ui', 'Bootstrap']
   },
   {
-    category: 'Banco de Dados',
-    items: ['PostgreSQL', 'MySQL', 'SQL']
+    category: 'Backend & CMS',
+    items: ['NestJS', 'Laravel', 'Django', 'Django REST Framework', 'Passport', 'JWT', 'Strapi']
   },
   {
-    category: 'Ferramentas & DevOps',
-    items: ['Git', 'Docker', 'Postman', 'Testes Automatizados', 'Linux']
+    category: 'Banco de Dados & ORM',
+    items: ['PostgreSQL', 'MySQL', 'Prisma', 'Eloquent', 'Django ORM']
   },
   {
-    category: 'Outros',
-    items: ['APIs RESTful', 'Web Scraping', 'Integrações AI', 'Metodologias Ágeis']
+    category: 'DevOps & Ferramentas',
+    items: ['Docker', 'Docker Compose', 'GitHub Actions', 'Git', 'GitHub', 'pnpm', 'Turborepo', 'Postman']
+  },
+  {
+    category: 'IA & Produto',
+    items: [
+      'Desenvolvimento assistido por agentes',
+      'Integração com APIs de IA',
+      'Levantamento de requisitos',
+      'Prototipação',
+      'Modelagem de dados',
+      'Planejamento de sprints'
+    ]
   }
 ];
 

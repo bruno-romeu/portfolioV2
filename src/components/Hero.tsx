@@ -57,9 +57,9 @@ export function Hero() {
           transition={{ delay: 0.5 }}
           className="text-base md:text-lg max-w-2xl mb-8 text-gray-400 leading-relaxed"
         >
-          Desenvolvo aplicações web, APIs e automações com foco em resolver problemas reais.
-          Trabalho com Python, Django, Laravel, React e PostgreSQL, conectando backend,
-          frontend e dados em soluções claras, úteis e fáceis de evoluir.
+          Construo produtos web do levantamento de requisitos à entrega. Trabalho principalmente
+          com TypeScript e Python, usando Next.js, NestJS, React, Laravel e Django, com
+          PostgreSQL como banco principal.
         </motion.p>
 
         <motion.div
