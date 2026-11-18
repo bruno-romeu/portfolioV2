@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/chat.ts": {
-      "excludeFiles": "{node_modules/onnxruntime-web/**,node_modules/onnxruntime-node/bin/napi-v6/darwin/**,node_modules/onnxruntime-node/bin/napi-v6/win32/**,node_modules/onnxruntime-node/bin/napi-v6/linux/arm64/**,node_modules/onnxruntime-node/bin/napi-v6/linux/x64/libonnxruntime_providers_*}"
+      "excludeFiles": "node_modules/{onnxruntime-web/**,onnxruntime-node/bin/napi-v6/{darwin,win32,linux/arm64}/**}"
     }
   }
 }
