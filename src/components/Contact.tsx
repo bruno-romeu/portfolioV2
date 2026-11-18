@@ -1,7 +1,8 @@
 import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
 import { useRef } from 'react';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { FileDown, Mail, MapPin, Phone } from 'lucide-react';
+import { RESUME_FILENAME, RESUME_URL } from '../resume';
 
 export function Contact() {
   const ref = useRef(null);
@@ -64,7 +65,7 @@ export function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: 0.4 }}
-            className="flex items-center gap-4 p-6 rounded-2xl border border-white/10 bg-white/5 md:col-span-2"
+            className="flex items-center gap-4 p-6 rounded-2xl border border-white/10 bg-white/5"
           >
             <div className="p-3 rounded-full bg-white/10 text-purple-400">
               <MapPin size={24} aria-hidden="true" />
@@ -74,6 +75,23 @@ export function Contact() {
               <p className="font-medium">Porto Alegre, RS - Brasil</p>
             </div>
           </motion.div>
+
+          <motion.a
+            href={RESUME_URL}
+            download={RESUME_FILENAME}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.5 }}
+            className="flex items-center gap-4 p-6 rounded-2xl border border-purple-400/30 bg-purple-500/10 hover:border-purple-400/60 hover:bg-purple-500/15 transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
+          >
+            <div className="p-3 rounded-full bg-white/10 text-purple-400">
+              <FileDown size={24} aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-400 mb-1">Currículo</p>
+              <p className="font-medium">Baixar PDF</p>
+            </div>
+          </motion.a>
         </div>
       </motion.div>
     </section>

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowDown, FileDown } from 'lucide-react';
+import { RESUME_FILENAME, RESUME_URL } from '../resume';
 
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]';
@@ -94,15 +95,28 @@ export function Hero() {
           </a>
         </motion.div>
 
-        <motion.button
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          onClick={() => scrollToSection('about')}
-          className={`px-8 py-3 bg-white text-black rounded-full hover:scale-105 transition-transform font-semibold ${focusRing}`}
+          className="flex flex-wrap gap-4"
         >
-          Conhecer minha trajetória
-        </motion.button>
+          <button
+            type="button"
+            onClick={() => scrollToSection('about')}
+            className={`px-8 py-3 bg-white text-black rounded-full hover:scale-105 transition-transform font-semibold ${focusRing}`}
+          >
+            Conhecer minha trajetória
+          </button>
+          <a
+            href={RESUME_URL}
+            download={RESUME_FILENAME}
+            className={`inline-flex items-center gap-2 px-8 py-3 rounded-full border border-white/25 text-white font-semibold hover:border-purple-400 hover:text-purple-300 hover:scale-105 transition-all ${focusRing}`}
+          >
+            <FileDown size={18} aria-hidden="true" />
+            Baixar currículo
+          </a>
+        </motion.div>
       </motion.div>
 
       <motion.button
