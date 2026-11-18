@@ -35,8 +35,13 @@ const EMBEDDING_DTYPE = 'q8';
 const PINECONE_INDEX = 'portfoliorag';
 const PINECONE_TOP_K = 5;
 const MIN_MATCH_SCORE = 0.2;
-const LLM_MODEL = 'llama-3.1-8b-instant';
-const LLM_MAX_OUTPUT_TOKENS = 600;
+/**
+ * `llama-3.1-8b-instant` passou a ser Enterprise na Groq. O gpt-oss-20b é um
+ * modelo de raciocínio: usamos esforço baixo e raciocínio oculto, e o limite de
+ * saída inclui os tokens de raciocínio.
+ */
+const LLM_MODEL = 'openai/gpt-oss-20b';
+const LLM_MAX_OUTPUT_TOKENS = 1000;
 const LLM_TEMPERATURE = 0.4;
 
 const REQUIRED_ENV_VARS = ['GROQ_API_KEY', 'PINECONE_API_KEY'] as const;
@@ -382,6 +387,7 @@ export async function POST(req: Request): Promise<Response> {
       messages,
       maxOutputTokens: LLM_MAX_OUTPUT_TOKENS,
       temperature: LLM_TEMPERATURE,
+      providerOptions: { groq: { reasoningEffort: 'low', reasoningFormat: 'hidden' } },
       onError: ({ error }) => {
         console.error(`[chat] Erro na etapa llm (stream): ${describeError(error)}`);
       },
