@@ -9,7 +9,7 @@ Portfólio pessoal de desenvolvedor Full Stack, com um assistente de IA ("Bruno 
 - **RAG (função serverless em `api/chat.ts`):**
   1. Embedding da pergunta com `all-MiniLM-L6-v2`, gerado dentro da própria função via transformers.js (ONNX, sem API externa nem token)
   2. Busca vetorial no Pinecone (índice `portfoliorag`, top 5)
-  3. Geração com Llama 3.1 8B via Groq
+  3. Geração com `openai/gpt-oss-20b` via Groq (raciocínio baixo e oculto)
 - **Deploy:** Vercel
 
 ## Rodando localmente
@@ -37,7 +37,7 @@ Crie um `.env` (ignorado pelo git) ou configure no painel da Vercel:
 ## Proteções da API de chat
 
 - Validação do corpo: só mensagens `user`/`assistant`; a última precisa ser do usuário.
-- Limites: 1000 caracteres por pergunta, 20 mensagens de histórico, 600 tokens de saída.
+- Limites: 1000 caracteres por pergunta, 20 mensagens de histórico, 1000 tokens de saída (incluindo raciocínio).
 - Rate limit por IP (10/min, 60/h) em memória. É *best-effort*: em serverless o estado é por instância. Para um limite garantido, use o Firewall da Vercel ou um store como Upstash/Vercel KV.
 - Erros sempre em JSON `{ "error": "<mensagem>" }`, sem detalhes internos; o conteúdo das conversas não é logado.
 
