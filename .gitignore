@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 .env
 .vercel
+
+# Exportações do índice do Pinecone (revisão local)
+rag/export*.json
